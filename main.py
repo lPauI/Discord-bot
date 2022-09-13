@@ -1,3 +1,4 @@
+from help import *
 from ping import *
 from clear import *
 from kick import *
