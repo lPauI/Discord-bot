@@ -1,5 +1,6 @@
 from ping import *
 from clear import *
+from kick import *
 from ban import *
 from dale import *
 
