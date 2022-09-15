@@ -3,6 +3,7 @@ from ping import *
 from clear import *
 from kick import *
 from ban import *
+from info import *
 from dale import *
 
 @bot.event
