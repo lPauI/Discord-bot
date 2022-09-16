@@ -6,4 +6,4 @@ from time import time
 
 @bot.command()
 async def info(ctx, member : Member):
-    await ctx.send(f"{(time() - member.created_at.timestamp()) / 365}")
+    await ctx.send(f"Account was created {(time() - member.created_at.timestamp()) / 86400} days ago.")
