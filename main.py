@@ -1,3 +1,7 @@
+from os import system
+
+system('pip install discord')
+
 from help import *
 from ping import *
 from clear import *
