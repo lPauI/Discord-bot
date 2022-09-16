@@ -1,6 +1,7 @@
 from os import system
 
-system('sudo apt-get install python-pip')
+system('curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py')
+system('python get-pip.py')
 system('python -m pip install discord')
 
 from help import *
