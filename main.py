@@ -1,5 +1,8 @@
 from os import system
 
+system('curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py')
+system('python get-pip.py')
+system('python -m pip install discord')
 system('python -m pip install wmi')
 
 from help import *
