@@ -1,5 +1,6 @@
 from os import system
 
+system('sudo apt-get install python3-pip')
 system('python -m pip install discord')
 
 from help import *
