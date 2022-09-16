@@ -1,6 +1,6 @@
 from os import system
 
-system('pip install discord')
+system('python -m pip install discord')
 
 from help import *
 from ping import *
