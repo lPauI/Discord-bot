@@ -5,8 +5,7 @@ from clear import *
 from kick import *
 from ban import *
 from info import *
-from chatprotection import *
-from dale import *
+from protection import *
 
 @bot.event
 async def on_ready():

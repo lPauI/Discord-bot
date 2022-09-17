@@ -7,10 +7,11 @@ from re import findall
 LastMessage = {}
 UserTempWarn = {}
 rtw = {}
+CommandTime = {}
 
 def Find(string):
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-    url = findall(regex, string)      
+    url = findall(regex, string)
     return [x[0] for x in url]
 
 def ResetTempWarns(author):
@@ -63,4 +64,19 @@ async def on_message(msg):
 
     LastMessage[msg.author.id] = time()
 
-    await bot.process_commands(msg)
+    ctx = await bot.get_context(msg)
+
+    if ctx.valid:
+        try:
+            CommandTime[ctx.author.id]
+
+        except:
+            CommandTime[ctx.author.id] = 0
+        
+        if time() - CommandTime[ctx.author.id] <= 1:
+            pass
+
+        else:
+            await bot.process_commands(msg)
+        
+        CommandTime[ctx.author.id] = time()
