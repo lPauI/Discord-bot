@@ -4,6 +4,8 @@ from time import time
 from threading import Timer
 from re import findall
 
+from timeout import timeout
+
 LastMessage = {}
 UserTempWarn = {}
 rtw = {}
@@ -54,7 +56,7 @@ async def on_message(msg):
             pass
 
         if UserTempWarn[msg.author.id] >= 3:
-            await msg.channel.send('slow down')
+            await timeout("", msg.author, 5)
             
             ResetTempWarns(msg.author.id)
 
