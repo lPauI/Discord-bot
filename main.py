@@ -1,13 +1,10 @@
 from checker import *
-from help import *
 from ping import *
 from clear import *
 from kick import *
 from ban import *
-from info import *
 from protection import *
 from timeout import *
-from tmpmsg import *
 
 @bot.event
 async def on_ready():

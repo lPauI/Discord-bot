@@ -3,8 +3,7 @@ from commands import *
 from time import time
 from threading import Timer
 from re import findall
-
-from timeout import timeout
+from datetime import timedelta
 
 LastMessage = {}
 UserTempWarn = {}
@@ -56,7 +55,13 @@ async def on_message(msg):
             pass
 
         if UserTempWarn[msg.author.id] >= 3:
-            await timeout("", msg.author, 5)
+            try:
+                await msg.author.timeout(timedelta(
+                    minutes = 5
+                ))
+
+            except Exception as err:
+                pass
             
             ResetTempWarns(msg.author.id)
 
@@ -65,20 +70,3 @@ async def on_message(msg):
             rtw[msg.author.id].start()
 
     LastMessage[msg.author.id] = time()
-
-    ctx = await bot.get_context(msg)
-
-    if ctx.valid:
-        try:
-            CommandTime[ctx.author.id]
-
-        except:
-            CommandTime[ctx.author.id] = 0
-        
-        if time() - CommandTime[ctx.author.id] <= 1:
-            pass
-
-        else:
-            await bot.process_commands(msg)
-        
-        CommandTime[ctx.author.id] = time()

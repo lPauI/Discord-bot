@@ -2,12 +2,20 @@ from commands import *
 
 from discord import Member
 
-@bot.command()
-async def ban(ctx, user: Member = "", reas = ""):
-    if Member and reas:
+@bot.tree.command()
+@app_commands.checks.has_permissions(ban_members = True)
+async def ban(interaction : Interaction, user: Member, reason : str):
+    if user and reason:
         try:
-            await ctx.guild.ban(user, reason = reas)
-            await ctx.send(f"{user} has been successfully banned.")
+            await interaction.guild.ban(user, reason = reason)
 
         except Exception as err:
-            await ctx.send(err)
+            await interaction.response.send_message(err)
+
+            return
+
+        await interaction.response.send_message(f"{user} has been successfully banned.")
+
+@ban.error
+async def ban_error(error, ctx):
+    pass

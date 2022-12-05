@@ -2,12 +2,18 @@ from commands import *
 
 from discord import Member
 
-@bot.command()
-async def kick(ctx, user : Member = "", reas = ""):
-    if user and reas:
+@bot.tree.command()
+@app_commands.checks.has_permissions(kick_members = True)
+async def kick(interaction : Interaction, user : Member, reason : str):
+    if user and reason:
         try:
-            await ctx.guild.kick(user, reason = reas)
-            await ctx.send(f"{user} has been successfully kicked.")
+            await interaction.guild.kick(user, reason = reason)
 
         except Exception as err:
-            await ctx.send(err)
+            await interaction.response.send_message(err)
+
+        await interaction.response.send_message(f"{user} has been successfully kicked.")
+
+@kick.error
+async def kick_error(error, ctx):
+    pass

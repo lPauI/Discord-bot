@@ -1,14 +1,15 @@
 from commands import *
 
-@bot.command()
-async def clear(ctx, number = ""):
-    if number:
-        try:
-            number = int(number)
+@bot.tree.command()
+@app_commands.checks.has_permissions(manage_messages = True)
+async def clear(interaction : Interaction, limit : int):
+    if limit:
+        await interaction.response.send_message(f"{limit} messages will be deleted.")
         
-            async for message in ctx.history(limit = number):
-                msg = await ctx.fetch_message(message.id)
-                await msg.delete()
+        async for message in interaction.channel.history(limit = limit):
+            msg = await interaction.channel.fetch_message(message.id)
+            await msg.delete()
 
-        except Exception as err:
-            print(err)
+@clear.error
+async def clear_error(error, ctx):
+    pass
