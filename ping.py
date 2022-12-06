@@ -9,7 +9,7 @@ async def ping(interaction : Interaction, ip : str):
 
         x = c.Win32_PingStatus(Address = ip)
 
-        if x[0].StatusCode == 0:
+        if not x[0].StatusCode:
             await interaction.response.send_message(f"Pinged {x[0].ProtocolAddress} ({x[0].Address}) and got reply in {x[0].ResponseTime} ms.")
 
         else:
