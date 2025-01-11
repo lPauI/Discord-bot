@@ -1,17 +1,17 @@
 from commands import *
-
-from wmi import WMI
+from ping3 import ping, PingError
 
 @bot.tree.command()
-async def ping(interaction : Interaction, ip : str):
+async def ping(interaction: Interaction, ip: str):
     if ip:
-        x = WMI().Win32_PingStatus(Address = ip)
-
-        if not x[0].StatusCode:
-            await interaction.response.send_message(f"Pinged {x[0].ProtocolAddress} ({x[0].Address}) and got reply in {x[0].ResponseTime} ms.")
-
-        else:
-            await interaction.response.send_message(f"{x[0].Address} is not replying.")
+        try:
+            response_time = ping(ip)
+            if response_time is not None:
+                await interaction.response.send_message(f"Pinged {ip} and got reply in {response_time * 1000:.2f} ms.")
+            else:
+                await interaction.response.send_message(f"{ip} is not replying.")
+        except PingError as e:
+            await interaction.response.send_message(f"Ping error: {e}")
 
 @ping.error
 async def ping_error(error, ctx):
