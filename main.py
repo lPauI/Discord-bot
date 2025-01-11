@@ -1,4 +1,3 @@
-from checker import *
 from ping import *
 from clear import *
 from kick import *
